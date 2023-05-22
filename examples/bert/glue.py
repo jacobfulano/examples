@@ -210,7 +210,7 @@ def run_job_worker(config: om.DictConfig,
 
 
 def run_jobs_parallel(configs: Sequence[om.DictConfig]) -> Dict[str, Any]:
-    """Runs a list of jobs (passed in as Hydra configs) across GPUs.
+    """Runs a list of jobs (passed in as OmegaConf configs) across GPUs.
 
     Returns a dictionary mapping job name to the result and original config
     Each job's results is a dict of:
