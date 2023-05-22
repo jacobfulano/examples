@@ -25,7 +25,7 @@ from torch.utils.data import DataLoader
 from examples.bert.src.glue.data import create_glue_dataset
 from examples.common.builders import build_optimizer # JPP ADDED
 
-#from omegaconf import DictConfig # JPP ADDED
+from omegaconf import OmegaConf, DictConfig # JPP ADDED
 
 
 def _build_dataloader(dataset, **kwargs):
@@ -421,7 +421,12 @@ class QQPJob(GlueClassificationJob):
         loggers: Optional[List[LoggerDestination]] = None,
         callbacks: Optional[List[Callback]] = None,
         precision: Optional[str] = None,
-        optimizer = None, # JPP ADDED, I think I can add Optional[DictConfig] = None
+        optimizer: Optional[DictConfig] = OmegaConf.create({"optimizer": {
+            "name": "decoupled_adamw",
+            "lr": 3.0e-5,
+            "betas": [0.9, 0.98],
+            "eps": 1.0e-06,
+            "weight_decay": 3.0e-6,}}), # JPP ADDED, I think I can add Optional[DictConfig] = None
         **kwargs,
     ):
         super().__init__(model=model,
