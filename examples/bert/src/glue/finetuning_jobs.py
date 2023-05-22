@@ -440,7 +440,7 @@ class QQPJob(GlueClassificationJob):
                          loggers=loggers,
                          callbacks=callbacks,
                          precision=precision,
-                         optimizer=optimizer, # JPP ADDED
+                         #optimizer=optimizer, # This doesn't appear in the base class JPP ADDED
                          **kwargs)
 
         # self.optimizer = DecoupledAdamW(self.model.parameters(),
