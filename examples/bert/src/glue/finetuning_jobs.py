@@ -421,12 +421,7 @@ class QQPJob(GlueClassificationJob):
         loggers: Optional[List[LoggerDestination]] = None,
         callbacks: Optional[List[Callback]] = None,
         precision: Optional[str] = None,
-        optimizer: Optional[DictConfig] = OmegaConf.create({
-            "name": "decoupled_adamw",
-            "lr": 3.0e-5,
-            "betas": [0.9, 0.98],
-            "eps": 1.0e-06,
-            "weight_decay": 3.0e-6,}), # JPP ADDED, I think I can add Optional[DictConfig] = None
+        optimizer: Optional[DictConfig] = None, # JPP ADDED, I think I can add Optional[DictConfig] = None
         **kwargs,
     ):
         super().__init__(model=model,
@@ -454,6 +449,16 @@ class QQPJob(GlueClassificationJob):
         #                                 eps=1.0e-06,
         #                                 weight_decay=3.0e-6)
         
+        # Set default optimizer hyperparameters for task
+        if optimizer is None:
+            optimizer = OmegaConf.create({
+                "name": "decoupled_adamw",
+                "lr": 3.0e-5,
+                "betas": [0.9, 0.98],
+                "eps": 1.0e-06,
+                "weight_decay": 3.0e-6,
+                })
+
         self.optimizer = build_optimizer(optimizer, self.model) # JPP ADDED
 
         dataset_kwargs = {
