@@ -164,7 +164,7 @@ def create_job_configs(main_config: om.DictConfig, tasks_to_run: Set[str],
                 'precision':
                     main_config.get('precision', None),
                 'optimizer': # will need to have an optimizer field for all tasks
-                   task_config.optimizer, # JPP ADDED
+                    task_config.get('optimizer', None), # JPP ADDED
                 'trainer_kwargs':
                     task_config.trainer_kwargs,
             })
